@@ -22,6 +22,43 @@ public:
       parent->children.push_back(this);
     }
 };
+
+Node* find_root_ptr(std::vector<Node> nodes){
+  Node* currentParent;
+  currentParent = &nodes[0];
+  while(currentParent->parent != NULL){
+    currentParent = currentParent->parent;
+  }
+  //std::cout << "root index is " << currentParent->key<<std::endl;
+  return currentParent;
+}
+
+
+
+int compute_height(Node* node){
+  int maxHeight = 0;  
+  int height = 0;
+  //if (node->parent == NULL) {
+  //  height = 1;
+    //return height;
+  //}
+  
+  if(node->children.size() == 0){
+    maxHeight = 1;
+  }
+  else {
+    for (int i = 0; i < node->children.size(); i++){
+      height = compute_height(node->children.at(i)) + 1;
+      if (height > maxHeight){
+        maxHeight = height;
+      }
+      //std::cout << "height is " << height << std::endl;
+      //std::cout << "maxHeight is " << maxHeight << std::endl;
+    }
+  }
+  //std::cout << "returned maxHeight is " << maxHeight << std::endl;
+  return maxHeight;
+}
 /**
 int compute_height(std::vector<Node> nodes){
   int maxHeight = 0;
@@ -132,6 +169,11 @@ int main_with_large_stack_space() {
       nodes[child_index].setParent(&nodes[parent_index]);
     nodes[child_index].key = child_index;
   }
+
+  Node* root = find_root_ptr(nodes);
+  int tree_height = compute_height(root);
+  std::cout << tree_height << std::endl;
+  return tree_height; 
   //std::cout << compute_height(nodes) << std::endl;
   
 }
