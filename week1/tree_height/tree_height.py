@@ -6,14 +6,14 @@ import threading
 
 # final solution
 """ Compute height of a given tree
-Height of a (rooted) tree is the maximum depth of a node, 
-or the maximum distance from a leaf to the root.
+Height of a (rooted) tree is the maximum depth of a node,
+or the maximum distance from a leaf to the root. 
 """
 class TreeHeight:
     def __init__(self, nodes):
-        self.n = len(nodes)
+        self.num = len(nodes)
         self.parent = nodes
-        self.depths = [0] * self.n
+        self.depths = [0] * self.num
 
     def path_len(self, node_id):
         """ Returns path length from given node to root."""
@@ -23,13 +23,13 @@ class TreeHeight:
 
         if self.depths[node_id]:
             return self.depths[node_id]
-        
+
         self.depths[node_id] = 1 + self.path_len(self.parent[node_id])
         return self.depths[node_id]
 
     def compute_height(self):
         """ Computes the tree height."""
-        return max([self.path_len(i) for i in range(self.n)])
+        return max([self.path_len(i) for i in range(self.num)])
 
 '''
 # original solution
@@ -73,11 +73,10 @@ def main():
     input()
     nodes = list(map(int, input().split()))
     tree = TreeHeight(nodes)
-    print (tree.compute_height())
+    print(tree.compute_height())
 # In Python, the default limit on recursion depth is rather low,
 # so raise it here for this problem. Note that to take advantage
 # of bigger stack, we have to launch the computation in a new thread.
 sys.setrecursionlimit(10**7)  # max depth of recursion
 threading.stack_size(2**27)   # new thread will get stack of such size
 threading.Thread(target=main).start()
-
