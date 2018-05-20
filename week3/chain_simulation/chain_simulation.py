@@ -37,7 +37,7 @@ class QueryProcessor:
     def process_query_naive(self, query):
         if query.type == "check":
             # use reverse order, because we append strings to the end
-            self.write_chain(cur for cur in reversed(self.elems)
+            self.write_chain(cur for cur in reversed(self.elems) \
                         if self._hash_func(cur) == query.ind)
         else:
             try:
@@ -56,7 +56,7 @@ class QueryProcessor:
     def process_query(self, query):
         if query.type == "check":
             # use reverse order, because we append strings to the end
-            self.write_chain(cur for cur in reversed(self.hashTable[query.ind])
+            self.write_chain(cur for cur in reversed(self.hashTable[query.ind]) \
                             if self._hash_func(cur) == query.ind)
         else:
             try:
